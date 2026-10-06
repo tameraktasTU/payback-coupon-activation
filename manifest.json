@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "PAYBACK Coupon Activation",
+  "version": "2.1.4",
+  "description": "Aktiviert PAYBACK Coupons sicher in Batches, erkennt auch „Jetzt teilnehmen“ und zeigt einen ruhigen, übersichtlichen Live-Fortschritt.",
+  "host_permissions": [
+    "https://www.payback.de/*",
+    "https://payback.de/*"
+  ],
+  "action": {
+    "default_title": "PAYBACK Coupon Activation",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "96": "icons/icon-96.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.payback.de/*",
+        "https://payback.de/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "payback-coupon-activation@local.addon",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  },
+  "permissions": [
+    "scripting"
+  ]
+}

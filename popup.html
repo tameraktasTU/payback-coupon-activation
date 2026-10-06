@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PAYBACK Coupon Activation</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <img src="icons/icon-48.png" width="38" height="38" alt="">
+      <div>
+        <h1>PAYBACK Coupon Activation</h1>
+        <p>PAYBACK Coupons gesammelt aktivieren</p>
+      </div>
+    </header>
+
+    <section id="unsupported" class="notice hidden">
+      <strong>PAYBACK ist nicht geöffnet.</strong>
+      <span>Öffne die PAYBACK-Couponseite in diesem Tab und starte das Add-on erneut.</span>
+    </section>
+
+    <section id="statusCard" class="status-card">
+      <div class="status-row">
+        <span id="statusDot" class="dot idle"></span>
+        <div>
+          <strong id="statusTitle">Bereit</strong>
+          <p id="statusMessage">Klicke auf „Coupons aktivieren“, um zu starten.</p>
+        </div>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div id="progressBar" class="progress-bar" style="width:0%"></div>
+      </div>
+      <div class="progress-labels">
+        <span id="progressLabel">0 %</span>
+        <span id="remainingLabel">0 offen</span>
+      </div>
+
+      <div id="runSummary" class="run-summary hidden" aria-live="polite">
+        <div class="run-summary-header">
+          <span class="spinner" aria-hidden="true"></span>
+          <span>Automatische Batch-Aktivierung</span>
+          <span class="batch-badge">bis zu 5 gleichzeitig</span>
+        </div>
+        <div class="run-summary-grid">
+          <div>
+            <strong id="processedCount">0 / 0</strong>
+            <small>verarbeitet</small>
+          </div>
+          <div>
+            <strong id="runSuccessCount">0</strong>
+            <small>erfolgreich</small>
+          </div>
+          <div>
+            <strong id="runErrorCount">0</strong>
+            <small>nicht bestätigt</small>
+          </div>
+        </div>
+      </div>
+      <p class="reload-info">
+        <span aria-hidden="true">ℹ</span>
+        <span>Nach erfolgreichem Abschluss wird die Seite nach 1,5 Sekunden automatisch neu geladen.</span>
+      </p>
+    </section>
+
+    <section class="stats" aria-label="Coupon-Status">
+      <div class="stat success"><span id="pageActivatedTotal">0</span><small>aktiviert</small></div>
+      <div class="stat open"><span id="pageInactiveTotal">0</span><small>nicht aktiviert</small></div>
+      <div class="stat"><span id="activated">0</span><small>neu aktiviert</small></div>
+      <div class="stat danger"><span id="failed">0</span><small>Fehler</small></div>
+    </section>
+
+    <div class="actions">
+      <button id="startButton" class="primary">Coupons aktivieren</button>
+      <button id="cancelButton" class="secondary hidden">Stoppen</button>
+    </div>
+
+    <button id="couponPageButton" class="link-button" type="button" title="PAYBACK-Couponseite in einem neuen Tab öffnen">
+      <span>Zur PAYBACK-Couponseite</span>
+      <span class="external-icon" aria-hidden="true">↗</span>
+    </button>
+
+    <p class="privacy">Keine Zugangsdaten, kein Tracking, keine Datenübertragung.</p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

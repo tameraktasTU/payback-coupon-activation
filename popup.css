@@ -1,0 +1,176 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  width: 370px;
+  background: #f7f8fb;
+  color: #151922;
+}
+.app { padding: 16px; }
+.header { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
+.header img { border-radius: 10px; }
+h1 { margin: 0; font-size: 17px; line-height: 1.2; }
+.header p { margin: 3px 0 0; color: #687083; font-size: 12px; }
+.notice {
+  padding: 11px 12px; border-radius: 10px; background: #fff4e5; border: 1px solid #ffd39b;
+  margin-bottom: 12px; font-size: 12px; color: #6b3f00;
+}
+.notice strong, .notice span { display: block; }
+.notice span { margin-top: 3px; }
+.status-card {
+  background: #fff; border: 1px solid #e5e8ef; border-radius: 14px; padding: 13px;
+  box-shadow: 0 5px 18px rgba(18, 27, 50, .05);
+}
+.status-row { display: flex; align-items: flex-start; gap: 9px; }
+.status-row strong { font-size: 13px; }
+.status-row p { margin: 3px 0 0; color: #687083; font-size: 12px; line-height: 1.35; }
+.dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 5px; flex: 0 0 auto; background: #8b94a7; }
+.dot.running { background: #2563eb; box-shadow: 0 0 0 4px rgba(37,99,235,.12); }
+.dot.success { background: #16a34a; }
+.dot.error { background: #dc2626; }
+.dot.cancelled { background: #d97706; }
+.progress-track { height: 7px; margin-top: 13px; background: #edf0f5; border-radius: 99px; overflow: hidden; }
+.progress-bar { height: 100%; background: #2563eb; border-radius: inherit; transition: width .25s ease; }
+.progress-labels { display: flex; justify-content: space-between; margin-top: 6px; color: #7a8293; font-size: 10px; }
+.reload-info {
+  display: flex; align-items: flex-start; gap: 8px; margin: 12px 0 0; padding: 9px 10px;
+  border: 1px solid #e0e8ff; border-radius: 9px; background: #f5f8ff;
+  color: #30415f; font-size: 11px; line-height: 1.45;
+}
+.reload-info > span:first-child { flex: 0 0 auto; color: #2453b8; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin: 10px 0 12px; }
+.stat { background: #fff; border: 1px solid #e5e8ef; border-radius: 11px; padding: 9px 5px; text-align: center; }
+.stat span { display: block; font-weight: 750; font-size: 16px; }
+.stat small { display: block; margin-top: 2px; color: #747d90; font-size: 9px; line-height: 1.15; }
+.stat.success span { color: #15803d; }
+.stat.open span { color: #b45309; }
+.stat.danger span { color: #b91c1c; }
+.actions { display: flex; gap: 8px; }
+button {
+  appearance: none; border: 0; border-radius: 10px; padding: 10px 12px; font-weight: 700;
+  font-size: 12px; cursor: pointer; flex: 1;
+}
+button:disabled { cursor: not-allowed; opacity: .55; }
+.primary { background: #1456d9; color: white; }
+.primary:hover:not(:disabled) { background: #104ac1; }
+.secondary { background: #e8ebf1; color: #252b36; }
+.link-button {
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #dbe1eb;
+  background: #fff;
+  color: #334155;
+  font-weight: 650;
+}
+.link-button:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.external-icon { font-size: 14px; line-height: 1; }
+.privacy { margin: 10px 0 0; text-align: center; font-size: 9px; color: #8a92a3; }
+.hidden { display: none !important; }
+@media (prefers-color-scheme: dark) {
+  body { background: #16191f; color: #f4f5f7; }
+  .header p, .status-row p, .progress-labels, .stat small, .privacy { color: #aeb5c2; }
+  .status-card, .stat { background: #20242c; border-color: #313640; }
+  .progress-track { background: #30353f; }
+  .secondary { background: #30353f; color: #f4f5f7; }
+  .link-button { background: #20242c; border-color: #3a404b; color: #e5e7eb; }
+  .link-button:hover { background: #292e37; border-color: #4a515e; }
+  .notice { background: #3a2a13; border-color: #61451e; color: #ffd49a; }
+  .reload-info { background: #1d2636; border-color: #2d3a52; color: #cbd5e1; }
+  .reload-info > span:first-child { color: #b9ccff; }
+}
+
+/* Ruhiger Laufmodus: stabile Statuskarte statt wechselnder Batch-Texte. */
+.status-card.is-running {
+  border-color: rgba(37, 99, 235, .28);
+  box-shadow: 0 7px 24px rgba(37, 99, 235, .09);
+}
+.status-card.is-running .progress-bar {
+  position: relative;
+  overflow: hidden;
+}
+.status-card.is-running .progress-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
+  animation: progress-sheen 1.5s ease-in-out infinite;
+}
+@keyframes progress-sheen {
+  to { transform: translateX(100%); }
+}
+.run-summary {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 11px;
+  background: #f5f8ff;
+  border: 1px solid #e0e8ff;
+}
+.run-summary-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #30415f;
+  font-size: 10px;
+  font-weight: 700;
+}
+.batch-badge {
+  margin-left: auto;
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: #e5edff;
+  color: #2453b8;
+  font-size: 9px;
+  white-space: nowrap;
+}
+.spinner {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid #bfd0ff;
+  border-top-color: #2563eb;
+  animation: spin .8s linear infinite;
+  flex: 0 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.run-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 9px;
+}
+.run-summary-grid > div {
+  padding: 7px 4px;
+  border-radius: 8px;
+  background: rgba(255,255,255,.75);
+  text-align: center;
+}
+.run-summary-grid strong {
+  display: block;
+  color: #1d2b45;
+  font-size: 12px;
+}
+.run-summary-grid small {
+  display: block;
+  margin-top: 1px;
+  color: #7a8293;
+  font-size: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  .run-summary { background: #1d2636; border-color: #2d3a52; }
+  .run-summary-header { color: #cbd5e1; }
+  .batch-badge { background: #283a60; color: #b9ccff; }
+  .run-summary-grid > div { background: rgba(255,255,255,.035); }
+  .run-summary-grid strong { color: #f3f4f6; }
+  .run-summary-grid small { color: #9ca3af; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner, .status-card.is-running .progress-bar::after { animation: none; }
+}
